@@ -11,7 +11,6 @@ export default class CommentList extends Component{
   //prop-types验证的简写方式
   static propTypes = {
     comments:PropTypes.array.isRequired,
-    delComment:PropTypes.func.isRequired
   }
   render(){
     const {comments} = this.props;
@@ -20,7 +19,7 @@ export default class CommentList extends Component{
       <ul className="col-md-8">
         <h3>评论回复：</h3>
         <h2 style={{display:display1}}>暂无评论，点击左侧添加评论！！！</h2>
-        {comments.map((comment,index) => <CommentItem comment={comment} key={index} delComment={this.props.delComment} index={index}/>)
+        {comments.map((comment,index) => <CommentItem comment={comment} key={index} index={index}/>)
         // comments.map((comment,index) => {console.log(comment+'---'+index);})
         }
       </ul>

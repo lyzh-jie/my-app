@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
+import PubSub from 'pubsub-js'
 
 import './comment-item.css'
 
@@ -7,7 +8,9 @@ class CommentItem extends Component {
   btnDel = () => {
     const index = this.props.index;
     console.log(index);
-    this.props.delComment(index);
+    // this.props.delComment(index);
+    PubSub.publish('delete',index)
+
   }
   render () {
     const {comment} = this.props;
@@ -25,6 +28,4 @@ class CommentItem extends Component {
 export default CommentItem;
 CommentItem.propTypes = {
   comment:PropTypes.object.isRequired,
-  delComment:PropTypes.func.isRequired,
-  index:PropTypes.number.isRequired
 }

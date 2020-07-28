@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PubSub from 'pubsub-js';
 import CommentForm from '../comment-form/comment-form'
 import CommentList from '../comment-list/comment-list'
 
@@ -13,15 +14,19 @@ class CommentApp extends Component {
         {userName:'Jerry',content:'watching cartoon伤害小朋友的眼睛'}]
     }
   }
+  componentDidMount(){
+    PubSub.subscribe('delete',(msg,data)=>{
+      console.log(msg,data);
+      let {comments} = this.state;
+      comments.splice(data,1);
+      this.setState(comments);
+    })
+
+  }
   addComment=(comment) => {
     const {comments} = this.state;
     comments.unshift(comment);
     this.setState(comments);
-  }
-  delComment = (index) => {
-   const {comments} = this.state;
-   comments.splice(index,1);
-   this.setState(comments);
   }
   render () {
     const {comments} = this.state;
@@ -30,7 +35,7 @@ class CommentApp extends Component {
         <h1>请发表对小朋友看动画片的看法</h1>
         <div className="container">
           <CommentForm addComment={this.addComment}/>
-          <CommentList comments={comments} delComment={this.delComment}/>
+          <CommentList comments={comments} />
         </div>
       </div>
     )
